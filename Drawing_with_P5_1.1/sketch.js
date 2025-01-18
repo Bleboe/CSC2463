@@ -19,11 +19,11 @@ function draw() {
   // example 2
   fill(0, 40, 100, 0.5);
   strokeWeight(0);
-  circle(200, 300, 150);
+  circle(200, 310, 150);
   fill(100, 50, 100, 0.5);
-  circle(250, 380, 150);
+  circle(250, 395, 150);
   fill(230, 50, 100, 0.5);
-  circle(150, 380, 150);
+  circle(150, 395, 150);
 
   // example 3
   fill(0);
