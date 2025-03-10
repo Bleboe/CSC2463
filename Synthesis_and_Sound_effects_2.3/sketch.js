@@ -17,7 +17,7 @@ function setup() {
     depth: 0.5,
     baseFrequency: 1000,
     octaves: 2
-  }).toDestination().start();
+  }).toDestination();
   noiseEnv = new Tone.AmplitudeEnvelope({
     attack: 0.8,
     decay: 4,
@@ -29,7 +29,7 @@ function setup() {
     min: 800,
     max: 4500
   }).connect(filt.frequency);
-  noise = new Tone.Noise("pink").connect(noiseEnv).start();
+  noise = new Tone.Noise("pink").connect(noiseEnv);
   values = new Float32Array([-96, -96, -30, -30, -12, 0, -12, -30, -30]);
 }
 
@@ -38,6 +38,8 @@ function draw() {
 }
 
 function mouseClicked() {
+  filt.start();
+  noise.start();
   image(car, 0, 0);
   noiseEnv.triggerAttackRelease(6);
   noise.volume.setValueCurveAtTime(values, Tone.now(), 6);
