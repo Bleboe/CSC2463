@@ -34,7 +34,7 @@ function setup() {
 }
 
 function draw() {
-
+  background(400, 400);
 }
 
 function mouseClicked() {
