@@ -10,7 +10,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
 
   filt = new Tone.AutoFilter({
     frequency: 0.8,
@@ -34,7 +34,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+
 }
 
 function mouseClicked() {
