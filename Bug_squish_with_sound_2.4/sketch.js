@@ -16,7 +16,8 @@ let synth1;
 let synth2;
 let part1;
 let seq1;
-let gain, panner, noiseEnv, centerFreq, filt, noise1;
+let gain1, panner1, noiseEnv1, centerFreq1, filt1, noise1;
+let gain2, panner2, noiseEnv2, centerFreq2, filt2, noise2;
 
 function preload() {
   bug = loadImage("Media/Bug.png");
@@ -46,31 +47,39 @@ function setup() {
     synth2.triggerAttackRelease(note, "2n", time);
   }), ["D4", "D4", "D5", null, "A4", null, null, "G#4", 
         null, "G4", null, "f4", null, "D4", "F4", "G4",
-      
         "C4", "C4", "D5", null, "A4", null, null, "G#4",
         null, "G4", null, "F4", null, "D4", "F4", "G4",
-    
         "B3", "B3", "D5", null, "A4", null, null, "G#4",
         null, "G4", null, "F4", null, "D4", "F4", "G4",
-
         "A#3", "A#3", "D5", null, "A4", null, null, "G#4",
         null, "G4", null, "F4", null, "D4", "F4", "G4"
-      ], 
-        "16n").start();
-
+      ], "16n").start();
 
   gain1 = new Tone.Gain().toDestination();
-  panner = new Tone.Panner(0).connect(gain1);
-  noiseEnv = new Tone.AmplitudeEnvelope({
+  panner1 = new Tone.Panner(0).connect(gain1);
+  noiseEnv1 = new Tone.AmplitudeEnvelope({
     attack: 0.7,
     decay: 0.5,
     sustain: 1,
     release: 0.1
-  }).connect(panner);
-  centerFreq = map(height/2, 0, height, 10000, 100, true);
-  filt = new Tone.Filter(centerFreq, "highpass").connect(noiseEnv);
-  noise1 = new Tone.Noise("brown").start().connect(filt);
+  }).connect(panner1);
+  centerFreq1 = map(height/2, 0, height, 10000, 100, true);
+  filt1 = new Tone.Filter(centerFreq1, "highpass").connect(noiseEnv1);
+  noise1 = new Tone.Noise("brown").start().connect(filt1);
   noise1.volume.value = 12;
+
+  gain2 = new Tone.Gain().toDestination();
+  panner2 = new Tone.Panner(0).connect(gain1);
+  noiseEnv2 = new Tone.AmplitudeEnvelope({
+    attack: 0.7,
+    decay: 0.5,
+    sustain: 1,
+    release: 0.1
+  }).connect(panner2);
+  centerFreq2 = map(height/2, 0, height, 10000, 100, true);
+  filt2 = new Tone.Filter(centerFreq2, "lowpass").connect(noiseEnv2);
+  noise2 = new Tone.Noise("pink").start().connect(filt2);
+  noise2.volume.value = 6;
 }
 
 function draw() {
@@ -222,7 +231,7 @@ class Character {
     }
     else if((this.x < (mouseX + 20) && this.x > (mouseX - 20)) &&
         (this.y < (mouseY + 20) && this.y > (mouseY - 20))) {
-          noiseEnv.triggerAttackRelease(0.1);
+          noiseEnv1.triggerAttackRelease(0.1);
           score += 1;
           switch(this.currentAnimation) {
             case "left":
@@ -234,6 +243,9 @@ class Character {
               this.animations[this.currentAnimation].flipped = false;
               break;
           }
+    }
+    else {
+      noiseEnv2.triggerAttackRelease(0.1);
     }
   }
 }
